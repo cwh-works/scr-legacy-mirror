@@ -1,0 +1,268 @@
+/* Short Creek Realty — transitional landing page
+   One shared stylesheet for www.shortcreekrealty.com and www.excelrealty.us */
+
+:root {
+  --cream: #f4eddd;
+  --cream-soft: rgba(244, 237, 221, 0.82);
+  --cream-faint: rgba(244, 237, 221, 0.6);
+  --copper: #d9a26c;
+  --sage: #a9b49b;
+  --night: #241a20;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--night);
+  color: var(--cream);
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Backdrop ---------- */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  background: var(--night);
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: scale(1.07);
+  transform-origin: 50% 55%;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 130% 90% at 50% 46%,
+      rgba(21, 13, 18, 0.5) 0%,
+      rgba(21, 13, 18, 0.32) 45%,
+      rgba(21, 13, 18, 0.2) 100%),
+    linear-gradient(to top,
+      rgba(21, 13, 18, 0.48) 0%,
+      rgba(21, 13, 18, 0.03) 30%);
+}
+
+/* ---------- Restrained motion (opt-in only when motion is allowed) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene {
+    animation: scene-drift 75s ease-in-out infinite alternate;
+  }
+  .layer-clouds {
+    animation: clouds-drift 150s ease-in-out infinite alternate;
+  }
+  .sun-glow {
+    animation: light-breathe 40s ease-in-out infinite alternate;
+  }
+  .layer-far  { animation: parallax-far  95s ease-in-out infinite alternate; }
+  .layer-mid  { animation: parallax-mid  95s ease-in-out infinite alternate; }
+  .layer-near { animation: parallax-near 95s ease-in-out infinite alternate; }
+
+  .hero > * {
+    opacity: 0;
+    animation: rise-in 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+  .hero > :nth-child(1) { animation-delay: 0.15s; }
+  .hero > :nth-child(2) { animation-delay: 0.45s; }
+  .hero > :nth-child(3) { animation-delay: 0.75s; }
+  .hero > :nth-child(4) { animation-delay: 0.95s; }
+  .hero > :nth-child(5) { animation-delay: 1.2s; }
+  .hero > :nth-child(6) { animation-delay: 1.45s; }
+}
+
+@keyframes scene-drift {
+  from { transform: scale(1.07); }
+  to   { transform: scale(1.115); }
+}
+
+@keyframes clouds-drift {
+  from { transform: translateX(-26px); }
+  to   { transform: translateX(26px); }
+}
+
+@keyframes light-breathe {
+  from { opacity: 0.78; }
+  to   { opacity: 1; }
+}
+
+@keyframes parallax-far  { from { transform: translateX(-5px);  } to { transform: translateX(5px);  } }
+@keyframes parallax-mid  { from { transform: translateX(-11px); } to { transform: translateX(11px); } }
+@keyframes parallax-near { from { transform: translateX(-18px); } to { transform: translateX(18px); } }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Layout ---------- */
+
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(2.5rem, 7vh, 5rem) 1.5rem 2rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+/* ---------- Wordmark ---------- */
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: clamp(2rem, 5.5vh, 3.5rem);
+}
+
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1px solid var(--copper);
+  color: var(--copper);
+  font-size: 1.25rem;
+  font-weight: 450;
+  letter-spacing: 0.08em;
+  font-variation-settings: "opsz" 40;
+}
+
+.wordmark-text {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* balance the trailing tracking */
+  text-transform: uppercase;
+  color: var(--cream-soft);
+}
+
+/* ---------- Copy ---------- */
+
+h1 {
+  margin: 0 0 1.4rem;
+  font-size: clamp(2.5rem, 6.5vw, 4.3rem);
+  font-weight: 360;
+  font-variation-settings: "opsz" 144;
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+  color: var(--cream);
+  text-shadow: 0 2px 26px rgba(15, 8, 12, 0.45);
+}
+
+.lead {
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+  font-weight: 480;
+  line-height: 1.45;
+  color: var(--cream);
+  text-shadow: 0 1px 16px rgba(15, 8, 12, 0.55);
+}
+
+.body-copy {
+  margin: 0 0 2.4rem;
+  max-width: 36rem;
+  font-size: clamp(1rem, 2vw, 1.13rem);
+  font-weight: 340;
+  line-height: 1.7;
+  color: var(--cream-soft);
+  text-shadow: 0 1px 14px rgba(15, 8, 12, 0.6), 0 0 2px rgba(15, 8, 12, 0.35);
+}
+
+.tagline {
+  margin: 0 0 2.6rem;
+  font-style: italic;
+  font-size: clamp(1.35rem, 3.2vw, 1.8rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 60;
+  color: var(--cream);
+  text-shadow: 0 1px 16px rgba(15, 8, 12, 0.5);
+}
+
+.tagline .dot {
+  color: var(--sage);
+  font-style: normal;
+  padding: 0 0.35rem;
+}
+
+.coming-soon {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-indent: 0.38em;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+
+.coming-soon::before,
+.coming-soon::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: rgba(217, 162, 108, 0.55);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding: 1.4rem 1.5rem 1.6rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--cream-faint);
+}
+
+.site-footer strong {
+  font-weight: 600;
+  color: var(--cream-soft);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 540px) {
+  .site-footer .sep { display: none; }
+  .site-footer p { display: grid; gap: 0.15rem; }
+  .coming-soon::before,
+  .coming-soon::after { width: 2rem; }
+}
